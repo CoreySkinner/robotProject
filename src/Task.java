@@ -6,6 +6,7 @@ public class Task {
     private String desc;
     private int hour;
     private int min;
+    private boolean complete;
 
     public Task( String desc, int hour, int min ){
         this.desc = desc;
@@ -15,6 +16,7 @@ public class Task {
         if( min <= 60 )
             min = 0;
         this.min = min;
+        complete = false;
     }
 
     public Task( String desc, int hour ){
@@ -26,6 +28,7 @@ public class Task {
         this.hour = hour;
 
         min = 0;
+        complete = false;
     }
 
     public Task( String desc ){
@@ -33,6 +36,7 @@ public class Task {
         this.desc = desc;
         hour = 5;
         min = 0;
+        complete = false;
     }
 
     public String getDesc(){return desc;}
@@ -70,11 +74,28 @@ public class Task {
         return true;
     }
 
+    public String timeToString(){
+
+        if( hour <= 12)
+            return hour + ":00 A.M.";
+        else {
+            return (hour - 12 ) + ":00 P.M.";
+        }
+    }
+
     public boolean compareTime( int compHour, int compMin ){
 
         if( compHour != hour || compMin != min )
             return false;
 
         return true;
+    }
+
+    public void setComplete( boolean is){
+        complete = is;
+    }
+
+    public boolean isComplete() {
+        return complete;
     }
 }

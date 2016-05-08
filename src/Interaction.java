@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -5,27 +6,32 @@ import java.util.Scanner;
  */
 public class Interaction {
 
-    private Task[] tasks;
+    private static HashSet<Task> tasks;
     private Scanner in;
+    private CheckBot checkBot;
 
-    public Interaction( int x){
-        tasks = new Task[x * 2];
+    public Interaction(){
+        tasks = new HashSet<>();
         in = new Scanner( System.in );
-        addMultipleTasks(x);
+        in.useDelimiter("\\n|\\r\\n?");
+        checkBot = new CheckBot(tasks);
+        addMultipleTasks();
     }
 
-    public void addMultipleTasks( int count ){
+    public void addMultipleTasks( ){
 
-        while( count > 0 ){
-            count--;
+        String ans = "yes";
+
+        do{
             addTask();
+            System.out.println("Is there another task you need reminder of?");
         }
+        while( "yes".equals(ans = in.nextLine().toLowerCase()) );
     }
 
     public void addTask(){
 
         String desc;
-        int count = 0;
         Task t = null;
 
         System.out.println("What is the description of the task you need a reminder of?");
@@ -40,24 +46,28 @@ public class Interaction {
         else
             t = new Task(desc);
 
-        while( count < tasks.length && tasks[count] != null )
-            count++;
-
-        tasks[count] = t;
+        tasks.add( t );
     }
 
     public void act(){
 
         String ans = null;
-        while( !"finished".equals(ans = in.nextLine())){
+        checkBot.setTasks(tasks);
+        Thread checker = new Thread(checkBot);
+        checker.start();
+
+        while( !"finished".equals(ans)){
 
             System.out.println("Enter a command. Enter help to get the list of commands");
+            ans = in.nextLine().toLowerCase();
+
             switch (ans){
                 case "help":
                     printCommands();
                     break;
                 case "add task":
                     addTask();
+                    checkBot.setTasks(tasks);
                     break;
                 case "list tasks":
                     printTasks();
@@ -70,21 +80,22 @@ public class Interaction {
 
     public void printCommands(){
         System.out.println("Your commands are:\nhelp\nadd task\n" +
-                "list tasks\nget time\n");
+                "list tasks\nget time\nfinished\n");
     }
 
     public void printTasks(){
 
-        int count = 0;
-
-        while( count < tasks.length && tasks[count] != null ) {
-            System.out.println(tasks[count].getDesc());
-            count++;
+        for( Task t : tasks ){
+            System.out.println(t.getDesc());
         }
     }
 
+    public static HashSet getTasks(){
+        return tasks;
+    }
+
     public static void main( String[] args ){
-        Interaction interaction = new Interaction(3);
+        Interaction interaction = new Interaction();
         interaction.act();
         System.exit(0);
     }

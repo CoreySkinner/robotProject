@@ -9,6 +9,10 @@ public class AskBot implements Runnable{
     private HashSet<Task> tasks;
     private Scanner in;
 
+    /**
+     * Contructor for AskBot class
+     * @param tasks a list of the current tasks
+     */
     public AskBot( HashSet tasks ){
 
         this.tasks = tasks;
@@ -16,6 +20,11 @@ public class AskBot implements Runnable{
         in.useDelimiter("\\n|\\r\\n?");
     }
 
+    /**
+     * sets the task
+     * @param t the updated task hashset
+     * @return boolean true if paramer was not null
+     */
     public boolean setTasks( HashSet t ){
 
         if( t == null )
@@ -25,6 +34,9 @@ public class AskBot implements Runnable{
         return true;
     }
 
+    /**
+     * promts user to add multiple tasks
+     */
     public void addMultipleTasks( ){
 
         String ans = "yes";
@@ -36,6 +48,9 @@ public class AskBot implements Runnable{
         while( "yes".equals(ans = in.nextLine().toLowerCase()) );
     }
 
+    /**
+     * prompts the user to enter information for a new task
+     */
     public void addTask(){
 
         String desc;
@@ -55,6 +70,10 @@ public class AskBot implements Runnable{
 
         tasks.add( t );
     }
+
+    /**
+     * Continuosly prompts user for commands in case they need or want to interact with it
+     */
     public void run(){
 
         addMultipleTasks();
@@ -87,6 +106,9 @@ public class AskBot implements Runnable{
         }
     }
 
+    /**
+     * locates a task and sets its status to complete
+     */
     public void completeTask(){
 
         String desc;
@@ -99,11 +121,17 @@ public class AskBot implements Runnable{
         }
     }
 
+    /**
+     * gives the user a list of all commands
+     */
     public void printCommands(){
         System.out.println("Your commands are:\nhelp\nadd task\n" +
                 "list tasks\nget time\nfinished\n");
     }
 
+    /**
+     * prints a list of the tasks in a readable format
+     */
     public void printTasks(){
 
         for( Task t : tasks ){

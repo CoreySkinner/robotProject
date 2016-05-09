@@ -11,6 +11,9 @@ public class Interaction {
     private CheckBot checkBot;
     private AskBot askBot;
 
+    /**
+     * Constructor for Interaction class
+     */
     public Interaction(){
         tasks = new HashSet<>();
         in = new Scanner( System.in );
@@ -19,6 +22,9 @@ public class Interaction {
         askBot = new AskBot(tasks);
     }
 
+    /**
+     * initiates askBot and checkBot threads
+     */
     public void act(){
 
         checkBot.setTasks(tasks);
@@ -28,11 +34,18 @@ public class Interaction {
         checker.start();
     }
 
+    /**
+     * exits the program
+     */
     public static void exit(){
 
         System.exit(0);
     }
 
+    /**
+     * Main class, initiates program
+     * @param args input arguments
+     */
     public static void main( String[] args ){
         Interaction interaction = new Interaction();
         interaction.act();

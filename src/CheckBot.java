@@ -7,10 +7,19 @@ public class CheckBot implements Runnable {
 
     private HashSet<Task> tasks;
 
+    /**
+     * Constructor for CheckBot class
+     * @param tasks the hashset of tasks the checkbot looks at
+     */
     public CheckBot( HashSet tasks ){
         this.tasks = tasks;
     }
 
+    /**
+     * sets the tasks hashset
+     * @param t a hashset of Task objects
+     * @return true if parameter was not null
+     */
     public boolean setTasks( HashSet t ){
 
         if( t == null )
@@ -20,6 +29,9 @@ public class CheckBot implements Runnable {
         return true;
     }
 
+    /**
+     * prints a list of incomplete tasks with a time to complete them by
+     */
     public void inComplete(){
 
 
@@ -32,6 +44,9 @@ public class CheckBot implements Runnable {
     }
 
     @Override
+    /**
+     * runs the checkBot thread
+     */
     public void run() {
         try{
             while(true) {

@@ -36,8 +36,8 @@ public class CheckBot implements Runnable {
         try{
             while(true) {
                 inComplete();
-                System.out.println("\nEnter a command, or help for a list of commands\n");
                 Thread.sleep(60000);
+                System.out.println("\nEnter a command, or help for a list of commands\n");
             }
         }catch (Exception e){}
     }
